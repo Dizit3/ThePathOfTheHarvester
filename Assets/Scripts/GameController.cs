@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -7,19 +8,17 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
+    [SerializeField] private Button startButton;
 
-    public bool isStarted = false;
+    public static bool isStarted = false;
 
 
     private int lineToMove = 1;
-    private int lineCount = 2;
-
-    private Vector3 shipCenter;
+    private int lineCount = 4;
 
     private void Start()
     {
         SwipeDetection.SwipeEvent += OnSwipe;
-        shipCenter = ship.transform.position;
     }
 
 
@@ -27,17 +26,31 @@ public class GameController : MonoBehaviour
     {
         if (isStarted)
         {
-            Move();
+            if (ship != null)
+            {
+                Move();
 
-            var shipPos = ship.transform.position;
+                var shipPos = ship.transform.position;
 
-            SwitchLile(shipPos);
+                SwitchLile(shipPos);
+            }
+            else
+            {
+                EndGame();
+            }
         }
+    }
+
+    private void EndGame()
+    {
+        isStarted = false;
     }
 
     public void StartGame()
     {
         isStarted = true;
+        startButton.gameObject.SetActive(false);
+
     }
     private void Move()
     {
@@ -48,13 +61,19 @@ public class GameController : MonoBehaviour
         switch (lineToMove)
         {
             case 0:
-                ship.transform.position = Vector3.Lerp(,  - new Vector3(4f, shipPos.y, shipPos.z) , swichSideSpeed);
+                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(-4f, shipPos.y, shipPos.z), swichSideSpeed);
                 break;
             case 1:
-                ship.transform.position = Vector3.Lerp(, , swichSideSpeed);
+                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(-2f, shipPos.y, shipPos.z), swichSideSpeed);
                 break;
             case 2:
-                ship.transform.position = Vector3.Lerp(,  + new Vector3(4f, shipPos.y, shipPos.z), swichSideSpeed); 
+                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(0f, shipPos.y, shipPos.z), swichSideSpeed);
+                break;
+            case 3:
+                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(2f, shipPos.y, shipPos.z), swichSideSpeed);
+                break;
+            case 4:
+                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(4f, shipPos.y, shipPos.z), swichSideSpeed);
                 break;
             default:
                 break;
