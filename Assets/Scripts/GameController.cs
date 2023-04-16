@@ -8,37 +8,58 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
 
+    public bool isStarted = false;
+
 
     private int lineToMove = 1;
-
     private int lineCount = 2;
+
+    private Vector3 shipCenter;
 
     private void Start()
     {
         SwipeDetection.SwipeEvent += OnSwipe;
+        shipCenter = ship.transform.position;
     }
+
 
     private void FixedUpdate()
     {
+        if (isStarted)
+        {
+            Move();
+
+            var shipPos = ship.transform.position;
+
+            SwitchLile(shipPos);
+        }
+    }
+
+    public void StartGame()
+    {
+        isStarted = true;
+    }
+    private void Move()
+    {
         movingZone.transform.position += new Vector3(0, 0, speed * Time.fixedDeltaTime);
-
-        var shipPos = ship.transform.position;
-
+    }
+    private void SwitchLile(Vector3 shipPos)
+    {
         switch (lineToMove)
         {
             case 0:
-                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(-4f, shipPos.y, shipPos.z), swichSideSpeed); break;
-
+                ship.transform.position = Vector3.Lerp(,  - new Vector3(4f, shipPos.y, shipPos.z) , swichSideSpeed);
+                break;
             case 1:
-                ship.transform.position =Vector3.Lerp(shipPos, new Vector3(0f, shipPos.y, shipPos.z), swichSideSpeed);
+                ship.transform.position = Vector3.Lerp(, , swichSideSpeed);
                 break;
             case 2:
-                ship.transform.position = Vector3.Lerp(shipPos, new Vector3(4f, shipPos.y, shipPos.z), swichSideSpeed); break;
+                ship.transform.position = Vector3.Lerp(,  + new Vector3(4f, shipPos.y, shipPos.z), swichSideSpeed); 
+                break;
             default:
                 break;
         }
     }
-
     private void OnSwipe(Vector2 direction)
     {
         if (direction == Vector2.right)
@@ -51,19 +72,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void SwitchLine(int dir)
-    {
-
-
-    }
-
-
-
-    enum Directions
-    {
-        Right,
-        Left
-    }
 }
 
 

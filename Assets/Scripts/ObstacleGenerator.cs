@@ -7,7 +7,10 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetMouseButtonDown(1))
+        {
+            Instantiate(cube);
+        }
     }
 
 
