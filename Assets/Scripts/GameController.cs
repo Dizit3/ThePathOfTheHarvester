@@ -13,12 +13,17 @@ public class GameController : MonoBehaviour
     public static bool isStarted = false;
 
 
+    public static event OnIncline InclineEvent;
+    public delegate void OnIncline(Vector2 direction);
+
+
     private int lineToMove = 1;
     private int lineCount = 4;
 
     private void Start()
     {
         SwipeDetection.SwipeEvent += OnSwipe;
+        Idle.IdleEvent += OnIdle;
     }
 
 
@@ -45,7 +50,6 @@ public class GameController : MonoBehaviour
     {
         isStarted = false;
     }
-
     public void StartGame()
     {
         isStarted = true;
@@ -84,18 +88,19 @@ public class GameController : MonoBehaviour
         if (direction == Vector2.right)
         {
             lineToMove = Mathf.Clamp(++lineToMove, 0, lineCount);
+
+            InclineEvent(direction);
         }
         else if (direction == Vector2.left)
         {
             lineToMove = Mathf.Clamp(--lineToMove, 0, lineCount);
+
+            InclineEvent(direction);
         }
     }
 
+    private void OnIdle()
+    {
+        InclineEvent(Vector2.zero);
+    }
 }
-
-
-
-
-
-
-
