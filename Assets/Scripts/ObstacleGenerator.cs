@@ -9,11 +9,14 @@ public class ObstacleGenerator : MonoBehaviour
 
     private Vector3 lastLineToSpawn;
 
+    private bool isSpawningActive = false;
+
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (GameController.isStarted && !isSpawningActive)
         {
             StartCoroutine(SpawnObstacle());
+            isSpawningActive = true;
         }
     }
 

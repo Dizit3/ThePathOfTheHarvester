@@ -1,14 +1,15 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Assets.Scripts.EnumStates;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI shipHP;
+    [SerializeField] float shipLives = 100f;
 
-    [SerializeField] int shipLives = 5;
+    public Animator anim;
 
-     public Animator anim;
+    [SerializeField] private Slider slider;
+
 
     public States State
     {
@@ -22,6 +23,8 @@ public class Ship : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
 
         GameController.InclineEvent += OnIncline;
+
+        slider.value = shipLives;
     }
 
 
@@ -29,7 +32,7 @@ public class Ship : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstacle")
         {
-            shipLives--;
+            shipLives -= 5f;
 
             Destroy(collision.gameObject);
         }
@@ -37,7 +40,7 @@ public class Ship : MonoBehaviour
 
     private void Update()
     {
-        shipHP.text = $"HP {shipLives}";
+        slider.value = Mathf.Lerp(slider.value,shipLives, 0.1f);
 
         if (shipLives <= 0)
         {
@@ -52,7 +55,7 @@ public class Ship : MonoBehaviour
         {
             State = States.rightIncline;
         }
-        else if(direction == Vector2.left)
+        else if (direction == Vector2.left)
         {
             State = States.leftIncline;
         }

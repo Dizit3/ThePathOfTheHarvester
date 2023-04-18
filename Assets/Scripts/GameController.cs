@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     public delegate void OnIncline(Vector2 direction);
 
 
-    private int lineToMove = 1;
+    private int lineToMove = 2;
     private int lineCount = 4;
 
     private void Start()
