@@ -22,8 +22,15 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
+
+
         SwipeDetection.SwipeEvent += OnSwipe;
         Idle.IdleEvent += OnIdle;
+    }
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 120;
     }
 
 

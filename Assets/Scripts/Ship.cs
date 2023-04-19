@@ -34,7 +34,7 @@ public class Ship : MonoBehaviour
         {
             shipLives -= 5f;
 
-            Destroy(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 

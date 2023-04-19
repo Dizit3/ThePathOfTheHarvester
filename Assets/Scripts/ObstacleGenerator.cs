@@ -5,6 +5,8 @@ public class ObstacleGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject sphere;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private ObjectPooler objectPooler;
+
     [SerializeField] private float spawnDelay = 2f;
 
     private Vector3 lastLineToSpawn;
@@ -42,6 +44,10 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void SpawnObstacle(Vector3 position)
     {
-        Instantiate(sphere, position, Quaternion.identity);
+        GameObject obj = objectPooler.GetPooledObject();
+
+        obj.transform.position = position;
+
+        obj.SetActive(true);
     }
 }
