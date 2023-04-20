@@ -6,9 +6,12 @@ public class Ship : MonoBehaviour
 {
     [SerializeField] float shipLives = 100f;
 
-    public Animator anim;
-
+    [SerializeField] private Animator anim;
     [SerializeField] private Slider slider;
+     
+    public static event OnCameraShake ShakeEvent;
+    public delegate void OnCameraShake();
+
 
 
     public States State
@@ -34,7 +37,10 @@ public class Ship : MonoBehaviour
         {
             shipLives -= 5f;
 
+            ShakeEvent();
+
             collision.gameObject.SetActive(false);
+
         }
     }
 

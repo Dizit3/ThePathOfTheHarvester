@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,10 +13,7 @@ public class GameController : MonoBehaviour
 
     public static bool isStarted = false;
 
-
-    public static event OnIncline InclineEvent;
-    public delegate void OnIncline(Vector2 direction);
-
+    public static event Action<Vector2> InclineEvent;
 
     private int lineToMove = 2;
     private int lineCount = 4;
@@ -30,7 +28,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 120;
+        Application.targetFrameRate = 1000;
     }
 
 
@@ -96,18 +94,18 @@ public class GameController : MonoBehaviour
         {
             lineToMove = Mathf.Clamp(++lineToMove, 0, lineCount);
 
-            InclineEvent(direction);
+            InclineEvent?.Invoke(direction);
         }
         else if (direction == Vector2.left)
         {
             lineToMove = Mathf.Clamp(--lineToMove, 0, lineCount);
 
-            InclineEvent(direction);
+            InclineEvent?.Invoke(direction);
         }
     }
 
     private void OnIdle()
     {
-        InclineEvent(Vector2.zero);
+        InclineEvent?.Invoke(Vector2.zero);
     }
 }
