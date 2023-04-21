@@ -8,11 +8,11 @@ public class Ship : MonoBehaviour
 
     [SerializeField] private Animator anim;
     [SerializeField] private Slider slider;
+
+    private AudioSource audioSource;
      
     public static event OnCameraShake ShakeEvent;
     public delegate void OnCameraShake();
-
-
 
     public States State
     {
@@ -28,6 +28,8 @@ public class Ship : MonoBehaviour
         GameController.InclineEvent += OnIncline;
 
         slider.value = shipLives;
+
+         audioSource = gameObject.GetComponent<AudioSource>();
     }
 
 
@@ -41,6 +43,7 @@ public class Ship : MonoBehaviour
 
             collision.gameObject.SetActive(false);
 
+            audioSource.Play();
         }
     }
 
