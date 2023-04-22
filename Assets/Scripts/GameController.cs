@@ -13,12 +13,16 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject exitButton;
 
 
+
     public static bool isStarted = false;
 
     public static event Action<Vector2> InclineEvent;
 
     private int lineToMove = 2;
     private int lineCount = 4;
+
+
+    public static int valuableMetals;
 
     private void Start()
     {

@@ -44,6 +44,10 @@ public class Ship : MonoBehaviour
             collision.gameObject.SetActive(false);
 
             audioSource.Play();
+        } else if (collision.gameObject.tag == "Resource")
+        {
+
+
         }
     }
 
