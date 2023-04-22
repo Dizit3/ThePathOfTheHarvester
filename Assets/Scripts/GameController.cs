@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
     [SerializeField] private Button startButton;
+    [SerializeField] private GameObject exitButton;
+
 
     public static bool isStarted = false;
 
@@ -59,7 +61,7 @@ public class GameController : MonoBehaviour
     {
         isStarted = true;
         startButton.gameObject.SetActive(false);
-
+        exitButton.gameObject.SetActive(false);
     }
     private void Move()
     {
