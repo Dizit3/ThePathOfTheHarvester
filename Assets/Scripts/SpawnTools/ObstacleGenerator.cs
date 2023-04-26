@@ -14,6 +14,31 @@ public class ObstacleGenerator : MonoBehaviour
 
     private bool isSpawningActive = false;
 
+    //public GameObject ObjectWeight(GameObject[] objects)
+    //{
+
+    //    int totalWeight = 0;
+
+    //    foreach (var obj in objects)
+    //    {
+    //        totalWeight += obj.Weight;
+    //    }
+
+    //    int randomWeight = Random.Range(0, totalWeight);
+
+    //    foreach (var obj in objects)
+    //    {
+    //        if (randomWeight < obj.Weight)
+    //        {
+    //            return obj;
+    //        }
+    //        randomWeight -= obj.Weight;
+    //    }
+
+    //    return null;
+
+
+    //}
     private void Update()
     {
         if (GameController.isStarted && !isSpawningActive)
@@ -45,7 +70,7 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void SpawnObstacle(Vector3 position)
     {
-        
+
 
         GameObject obj = objectPooler.GetPooledObject(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)]);
 
@@ -54,14 +79,5 @@ public class ObstacleGenerator : MonoBehaviour
         obj.SetActive(true);
     }
 
-    //private void Rotate()
-    //{
-    //    rb.AddTorque(new Vector3(Rand(), Rand(), Rand()) * 5);
-    //}
-
-    //private float Rand()
-    //{
-    //    return Random.Range(0f, 1f);
-    //}
 
 }

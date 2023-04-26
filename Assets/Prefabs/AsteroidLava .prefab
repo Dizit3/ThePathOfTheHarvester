@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6004603216415274955}
   - component: {fileID: 2343392294225619220}
   - component: {fileID: 115971654193881042}
+  - component: {fileID: 1036212779252832663}
   m_Layer: 0
   m_Name: 'AsteroidLava '
   m_TagString: Obstacle
@@ -115,3 +116,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 786929256884405677, guid: bfa26fcd4dc0edf458f252371c54f4fc, type: 3}
+--- !u!114 &1036212779252832663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5211894847320233502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40cd0ad34546f344f950202e9ce37965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 5
