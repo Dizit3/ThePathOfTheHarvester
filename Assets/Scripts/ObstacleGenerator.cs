@@ -6,6 +6,7 @@ public class ObstacleGenerator : MonoBehaviour
     [SerializeField] private GameObject sphere;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private ObjectPooler objectPooler;
+    [SerializeField] private GameObject[] objectsToSpawn;
 
     [SerializeField] private float spawnDelay = 2f;
 
@@ -44,7 +45,9 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void SpawnObstacle(Vector3 position)
     {
-        GameObject obj = objectPooler.GetPooledObject();
+        
+
+        GameObject obj = objectPooler.GetPooledObject(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)]);
 
         obj.transform.position = position;
 

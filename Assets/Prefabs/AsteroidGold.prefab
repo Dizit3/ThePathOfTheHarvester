@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2343392294225619220}
   - component: {fileID: 115971654193881042}
   m_Layer: 0
-  m_Name: 'AsteroidLava '
+  m_Name: AsteroidGold
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c6846c6017030da4ea01f89b8f91282f, type: 2}
+  - {fileID: 2100000, guid: 5c673264051da884d9ac08c695c1ad3f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

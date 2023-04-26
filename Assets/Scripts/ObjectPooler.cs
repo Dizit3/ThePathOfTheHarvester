@@ -3,41 +3,61 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    [SerializeField] private GameObject objectToPool;
+    [System.Serializable]
+    public struct ObjectPool
+    {
+        public GameObject objectToPool;
+        public int poolSize;
+    }
 
-    private int poolSize = 80;
+    [SerializeField] private List<ObjectPool> objectPools;
+
+    private Dictionary<GameObject, List<GameObject>> pooledObjects = new Dictionary<GameObject, List<GameObject>>();
 
     private int newInstanceCount = 0;
 
-    private List<GameObject> pooledObjects;
-
     private void Start()
     {
-        pooledObjects = new List<GameObject>();
-
-        for (int i = 0; i < poolSize; i++)
+        foreach (ObjectPool objectPool in objectPools)
         {
+            List<GameObject> pool = new List<GameObject>();
 
-            GameObject obj = Instantiate(objectToPool);
-            obj.SetActive(false);
-            pooledObjects.Add(obj);
+            for (int i = 0; i < objectPool.poolSize; i++)
+            {
+                GameObject obj = Instantiate(objectPool.objectToPool);
+                obj.SetActive(false);
+                pool.Add(obj);
+            }
+
+            pooledObjects.Add(objectPool.objectToPool, pool);
         }
     }
 
-    public GameObject GetPooledObject()
+    public GameObject GetPooledObject(GameObject objectToPool)
     {
-        for (int i = 0; i < pooledObjects.Count; i++)
-        {
-            if (!pooledObjects[i].activeInHierarchy)
-            {
-                return pooledObjects[i];
-            }
-        }
+        List<GameObject> pool;
 
-        GameObject obj = Instantiate(objectToPool);
-        newInstanceCount++;
-        Debug.Log("New instance count: " + newInstanceCount);
-        obj.SetActive(false);
-        return obj;
+        if (pooledObjects.TryGetValue(objectToPool, out pool))
+        {
+            for (int i = 0; i < pool.Count; i++)
+            {
+                if (!pool[i].activeInHierarchy)
+                {
+                    return pool[i];
+                }
+            }
+
+            GameObject obj = Instantiate(objectToPool);
+            newInstanceCount++;
+            Debug.Log("New instance count: " + newInstanceCount);
+            obj.SetActive(false);
+            pool.Add(obj);
+            return obj;
+        }
+        else
+        {
+            Debug.LogError("Object pool not found.");
+            return null;
+        }
     }
 }

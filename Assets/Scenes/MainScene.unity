@@ -7891,7 +7891,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e67be794c82df74d90bea890e0c6728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToPool: {fileID: 5211894847320233502, guid: 7d1deeb31e409f2489037024403fc9d2, type: 3}
+  objectPools:
+  - objectToPool: {fileID: 5211894847320233502, guid: 7d1deeb31e409f2489037024403fc9d2, type: 3}
+    poolSize: 80
+  - objectToPool: {fileID: 5211894847320233502, guid: 04eab6181a169ad459db6fc873c81aad, type: 3}
+    poolSize: 20
 --- !u!4 &1906738445
 Transform:
   m_ObjectHideFlags: 0
@@ -8289,4 +8293,7 @@ MonoBehaviour:
   - {fileID: 1339764674}
   - {fileID: 1470416930}
   objectPooler: {fileID: 1906738444}
+  objectsToSpawn:
+  - {fileID: 5211894847320233502, guid: 04eab6181a169ad459db6fc873c81aad, type: 3}
+  - {fileID: 5211894847320233502, guid: 7d1deeb31e409f2489037024403fc9d2, type: 3}
   spawnDelay: 0.2
