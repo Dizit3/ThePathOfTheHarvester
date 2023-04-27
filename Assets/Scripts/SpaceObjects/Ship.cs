@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using static Assets.Scripts.EnumStates;
@@ -10,7 +11,10 @@ public class Ship : MonoBehaviour
     [SerializeField] private Slider slider;
 
     private AudioSource audioSource;
-     
+
+
+
+    public static event Action<int> AddMoneyEvent;
     public static event OnCameraShake ShakeEvent;
     public delegate void OnCameraShake();
 
@@ -46,7 +50,11 @@ public class Ship : MonoBehaviour
             audioSource.Play();
         } else if (collision.gameObject.tag == "Resource")
         {
+            var cost = collision.gameObject.GetComponent<GoldAsteroid>().price;
 
+            AddMoneyEvent?.Invoke(cost);
+
+            collision.gameObject.SetActive(false);
 
         }
     }

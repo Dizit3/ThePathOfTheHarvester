@@ -7,6 +7,4 @@ public class StartButton : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
-
 }
