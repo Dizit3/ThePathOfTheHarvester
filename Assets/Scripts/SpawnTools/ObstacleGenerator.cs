@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ObstacleGenerator : MonoBehaviour
 {
-    [SerializeField] private GameObject sphere;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private ObjectPooler objectPooler;
     [SerializeField] private GameObject[] objectsToSpawn;
