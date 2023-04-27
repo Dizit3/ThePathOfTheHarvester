@@ -1384,8 +1384,9 @@ MonoBehaviour:
   swichSideSpeed: 0.5
   movingZone: {fileID: 1327742855}
   ship: {fileID: 893850661}
-  startButton: {fileID: 1986997859}
   exitButton: {fileID: 1974214331}
+  startButton: {fileID: 1986997859}
+  totalScore: {fileID: 1862806893}
 --- !u!1 &893850661
 GameObject:
   m_ObjectHideFlags: 0
@@ -7739,7 +7740,7 @@ GameObject:
   - component: {fileID: 1862806894}
   - component: {fileID: 1862806893}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TotalScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8275,7 +8276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b10fd255e96ee4e8bec8e6a0155272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphere: {fileID: 2045552070975911811, guid: 615be172387b55d47825283bb1339ec9, type: 3}
   spawnPoints:
   - {fileID: 1195303358}
   - {fileID: 1777972979}
