@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,10 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
-    [SerializeField] private Button startButton;
     [SerializeField] private GameObject exitButton;
+    [SerializeField] private Button startButton;
+    [SerializeField] private TextMeshProUGUI totalScore;
+
 
 
 
@@ -26,10 +29,19 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-
-
         SwipeDetection.SwipeEvent += OnSwipe;
         Idle.IdleEvent += OnIdle;
+        Ship.AddMoneyEvent += AddMoney;
+
+        totalScore.text = "0";
+
+    }
+
+    private void AddMoney(int obj)
+    {
+        var score = int.Parse(totalScore.text) + obj;
+
+        totalScore.text = Convert.ToString(score);
     }
 
     private void Awake()
