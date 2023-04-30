@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
-class LavaMetor : SpaceBody
+class LavaMetor : MonoBehaviour , IWeighted
 {
     private bool isRotate;
 
     private Rigidbody rb;
+    [SerializeField]private int weight = 5;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -21,6 +23,12 @@ class LavaMetor : SpaceBody
 
     }
 
+    public int GetWeight()
+    {
+        return weight;
+    }
+
+
     private void Rotate()
     {
         rb.AddTorque(new Vector3(Rand(), Rand(), Rand()) * 3);
@@ -31,4 +39,8 @@ class LavaMetor : SpaceBody
         return Random.Range(-1f, 1f);
     }
 
+    public GameObject GetGameObject()
+    {
+        return this.gameObject;
+    }
 }
