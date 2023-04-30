@@ -44,7 +44,7 @@ public class GoldAsteroid : MonoBehaviour, IWeighted
 
     public GameObject GetGameObject()
     {
-        return this.gameObject;
+        return gameObject;
     }
 
 }

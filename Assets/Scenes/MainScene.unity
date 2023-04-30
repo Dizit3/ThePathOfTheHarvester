@@ -7896,7 +7896,7 @@ MonoBehaviour:
   - objectToPool: {fileID: 5211894847320233502, guid: 7d1deeb31e409f2489037024403fc9d2, type: 3}
     poolSize: 80
   - objectToPool: {fileID: 5211894847320233502, guid: 04eab6181a169ad459db6fc873c81aad, type: 3}
-    poolSize: 20
+    poolSize: 30
 --- !u!4 &1906738445
 Transform:
   m_ObjectHideFlags: 0

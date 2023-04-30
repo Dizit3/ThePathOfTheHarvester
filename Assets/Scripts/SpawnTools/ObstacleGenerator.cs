@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObstacleGenerator : MonoBehaviour
@@ -9,15 +10,18 @@ public class ObstacleGenerator : MonoBehaviour
 
     [SerializeField] private float spawnDelay = 2f;
 
+    private List<IWeighted> weightedObj = new List<IWeighted>();
+
     private Vector3 lastLineToSpawn;
 
     private bool isSpawningActive = false;
 
     private void Awake()
     {
+
         for (int i = 0; i < objectsToSpawn.Length; i++)
         {
-
+            weightedObj.Add(objectsToSpawn[i].GetComponent<IWeighted>());
         }
     }
 
@@ -50,11 +54,11 @@ public class ObstacleGenerator : MonoBehaviour
         }
     }
 
-    public GameObject RandomIWeightedObject()
+    public IWeighted RandomIWeightedObject()
     {
         int totalWeight = 0;
 
-        foreach (var prefab in objectsToWeight)
+        foreach (var prefab in weightedObj)
         {
             totalWeight += prefab.GetWeight();
         }
@@ -63,13 +67,13 @@ public class ObstacleGenerator : MonoBehaviour
 
         int currentWeight = 0;
 
-        foreach (var prefab in objectsToSpawn)
+        foreach (var prefab in weightedObj)
         {
             currentWeight += prefab.GetWeight();
 
             if (currentWeight > randomWeight)
             {
-                return prefab.GetGameObject();
+                return prefab;
             }
 
             currentWeight = 0;
@@ -80,13 +84,14 @@ public class ObstacleGenerator : MonoBehaviour
 
     private void SpawnObstacle(Vector3 position)
     {
+        var randIWeighted = RandomIWeightedObject();
+        if (randIWeighted != null)
+        {
+            GameObject obj = objectPooler.GetPooledObject(randIWeighted.GetGameObject());
+            obj.transform.position = position;
 
-
-        GameObject obj = objectPooler.GetPooledObject(RandomIWeightedObject());
-
-        obj.transform.position = position;
-
-        obj.SetActive(true);
+            obj.SetActive(true);
+        }
     }
 
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-internal interface IWeighted
+public interface IWeighted
 {
     public int GetWeight();
 
