@@ -1,26 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-class LavaMetor : MonoBehaviour , IWeighted
+class LavaMetor : MonoBehaviour, IWeighted
 {
-    private bool isRotate;
-
     private Rigidbody rb;
-    [SerializeField]private int weight = 5;
+    [SerializeField] private int weight = 5;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        if (!isRotate)
-        {
-            Rotate();
-
-            isRotate = true;
-        }
-
+        rb.velocity = Vector3.zero;
+        Rotate();
     }
 
     public int GetWeight()
@@ -36,11 +31,11 @@ class LavaMetor : MonoBehaviour , IWeighted
 
     private float Rand()
     {
-        return Random.Range(-1f, 1f);
+        return UnityEngine.Random.Range(-1f, 1f);
     }
 
     public GameObject GetGameObject()
     {
-        return this.gameObject;
+        return gameObject;
     }
 }

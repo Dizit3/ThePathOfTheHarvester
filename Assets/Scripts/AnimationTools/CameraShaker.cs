@@ -14,7 +14,7 @@ public class CameraShaker : MonoBehaviour
 
     private void OnEnable()
     {
-        Ship.ShakeEvent += TriggerShake;
+        Ship.OnShake += TriggerShake;
         initialPosition = transform.localPosition;
     }
 

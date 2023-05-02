@@ -15,40 +15,38 @@ public class GameController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalScore;
 
 
-
-
     public static bool isStarted = false;
 
-    public static event Action<Vector2> InclineEvent;
+    public static event Action<Vector2> OnIncline;
 
     private int lineToMove = 2;
     private int lineCount = 4;
-
 
     public static int valuableMetals;
 
     private void Start()
     {
-        SwipeDetection.SwipeEvent += OnSwipe;
-        Idle.IdleEvent += OnIdle;
-        Ship.AddMoneyEvent += AddMoney;
+        SwipeDetection.OnSwipe += Swipe;
+        Idle.OnIdle += IdleState;
+        Ship.OnAddMoney += AddMoney;
+        Ship.OnHealthChanged += HealthWatcher;
 
         totalScore.text = "0";
 
     }
 
-    private void AddMoney(int obj)
+    private void HealthWatcher(float health)
     {
-        var score = int.Parse(totalScore.text) + obj;
-
-        totalScore.text = Convert.ToString(score);
+        if (health <= 0)
+        {
+            EndGame();
+        }
     }
 
     private void Awake()
     {
         Application.targetFrameRate = 1000;
     }
-
 
     private void FixedUpdate()
     {
@@ -69,15 +67,22 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void EndGame()
-    {
-        isStarted = false;
-    }
     public void StartGame()
     {
         isStarted = true;
         startButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
+    }
+
+    private void EndGame()
+    {
+        isStarted = false;
+    }
+    private void AddMoney(int obj)
+    {
+        var score = int.Parse(totalScore.text) + obj;
+
+        totalScore.text = Convert.ToString(score);
     }
     private void Move()
     {
@@ -106,24 +111,23 @@ public class GameController : MonoBehaviour
                 break;
         }
     }
-    private void OnSwipe(Vector2 direction)
+    private void Swipe(Vector2 direction)
     {
         if (direction == Vector2.right)
         {
             lineToMove = Mathf.Clamp(++lineToMove, 0, lineCount);
 
-            InclineEvent?.Invoke(direction);
+            OnIncline?.Invoke(direction);
         }
         else if (direction == Vector2.left)
         {
             lineToMove = Mathf.Clamp(--lineToMove, 0, lineCount);
 
-            InclineEvent?.Invoke(direction);
+            OnIncline?.Invoke(direction);
         }
     }
-
-    private void OnIdle()
+    private void IdleState()
     {
-        InclineEvent?.Invoke(Vector2.zero);
+        OnIncline?.Invoke(Vector2.zero);
     }
 }

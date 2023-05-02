@@ -7,11 +7,12 @@ TagManager:
   - Obstacle
   - Despawn
   - Resource
+  - TestCube
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - IgnoreCollisions
   - Water
   - UI
   - Post-processing
