@@ -32,11 +32,12 @@ public class ObstacleGenerator : MonoBehaviour
             StartCoroutine(SpawnObstacle());
             isSpawningActive = true;
         }
+
     }
 
     IEnumerator SpawnObstacle()
     {
-        while (true)
+        while (GameController.isStarted)
         {
             yield return new WaitForSeconds(spawnDelay);
 

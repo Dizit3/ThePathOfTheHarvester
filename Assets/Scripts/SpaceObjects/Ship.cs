@@ -7,10 +7,14 @@ public class Ship : MonoBehaviour
 {
     [SerializeField] float shipLives = 100f;
 
-    [SerializeField] private Animator anim;
+     public GameObject animShip;
+
     [SerializeField] private Slider slider;
 
+    public bool IsAlive = true;
+
     private AudioSource audioSource;
+    private Animator animator;
 
     public static event Action<int> OnAddMoney;
     public static event Action OnShake;
@@ -18,13 +22,17 @@ public class Ship : MonoBehaviour
 
     public States State
     {
-        get { return (States)anim.GetInteger("turnDirection"); }
-        set { anim.SetInteger("turnDirection", (int)value); }
+        get { return (States)animator.GetInteger("turnDirection"); }
+        set
+        {
+                animator.SetInteger("turnDirection", (int)value);
+        }
     }
+
 
     private void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
+        animator = animShip.GetComponentInChildren<Animator>();
 
         GameController.OnIncline += Incline;
         OnHealthChanged += ChangeHPBar;

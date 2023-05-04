@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,11 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
+    [SerializeField] private GameObject shipAnim;
     [SerializeField] private GameObject exitButton;
     [SerializeField] private Button startButton;
+    [SerializeField] private Button exitToMainMenuButton;
+    [SerializeField] private Image youLosePlane;
     [SerializeField] private TextMeshProUGUI totalScore;
 
 
@@ -39,20 +43,21 @@ public class GameController : MonoBehaviour
     {
         if (health <= 0)
         {
-            EndGame();
+            ship.GetComponent<Ship>().IsAlive = false;
         }
     }
 
     private void Awake()
     {
         Application.targetFrameRate = 1000;
+  
     }
 
     private void FixedUpdate()
     {
         if (isStarted)
         {
-            if (ship != null)
+            if (ship.GetComponent<Ship>().IsAlive)
             {
                 Move();
 
@@ -66,17 +71,25 @@ public class GameController : MonoBehaviour
             }
         }
     }
+    
 
     public void StartGame()
     {
         isStarted = true;
         startButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
+
     }
 
     private void EndGame()
     {
         isStarted = false;
+        //var anim = shipAnim.gameObject.GetComponent<Animator>();
+        //anim.enabled = false;
+        exitToMainMenuButton.gameObject.SetActive(true);
+        youLosePlane.gameObject.SetActive(true);
+
+
     }
     private void AddMoney(int obj)
     {
