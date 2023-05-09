@@ -8,6 +8,8 @@ TagManager:
   - Despawn
   - Resource
   - TestCube
+  - ShipAnim
+  - ShipScript
   layers:
   - Default
   - TransparentFX

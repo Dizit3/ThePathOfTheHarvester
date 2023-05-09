@@ -7,7 +7,7 @@ public class Ship : MonoBehaviour
 {
     [SerializeField] float shipLives = 100f;
 
-     public GameObject animShip;
+    public GameObject animShip;
 
     [SerializeField] private Slider slider;
 
@@ -25,14 +25,27 @@ public class Ship : MonoBehaviour
         get { return (States)animator.GetInteger("turnDirection"); }
         set
         {
+            if (animator != null)
+            {
                 animator.SetInteger("turnDirection", (int)value);
+
+            }
+            else
+            {
+                animator = GameObject.FindGameObjectWithTag("ShipAnim").GetComponentInChildren<Animator>();
+
+            }
         }
     }
 
 
     private void Awake()
     {
+
         animator = animShip.GetComponentInChildren<Animator>();
+
+
+
 
         GameController.OnIncline += Incline;
         OnHealthChanged += ChangeHPBar;

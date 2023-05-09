@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,14 +42,23 @@ public class GameController : MonoBehaviour
     {
         if (health <= 0)
         {
-            ship.GetComponent<Ship>().IsAlive = false;
+            if (ship != null)
+            {
+                ship.GetComponent<Ship>().IsAlive = false;
+            }
+            else
+            {
+                ship = GameObject.FindGameObjectWithTag("ShipScript");
+                ship.GetComponent<Ship>().IsAlive = false;
+
+            }
         }
     }
 
     private void Awake()
     {
         Application.targetFrameRate = 1000;
-  
+
     }
 
     private void FixedUpdate()
@@ -71,7 +79,7 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    
+
 
     public void StartGame()
     {
