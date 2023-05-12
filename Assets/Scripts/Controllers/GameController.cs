@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private float speed = 2f;
     [SerializeField] private float swichSideSpeed = 0.5f;
 
-    [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
     [SerializeField] private GameObject shipAnim;
     [SerializeField] private GameObject exitButton;
@@ -20,6 +18,7 @@ public class GameController : MonoBehaviour
     public static bool isStarted = false;
 
     public static event Action<Vector2> OnIncline;
+    public static event Action OnShipMove;
 
     private int lineToMove = 2;
     private int lineCount = 4;
@@ -34,7 +33,6 @@ public class GameController : MonoBehaviour
     {
         SwipeDetection.OnSwipe += Swipe;
         Idle.OnIdle += IdleState;
-        Ship.OnHealthChanged += HealthWatcher;
     }
     private void FixedUpdate()
     {
@@ -42,7 +40,7 @@ public class GameController : MonoBehaviour
         {
             if (ship.GetComponent<Ship>().IsAlive)
             {
-                Move();
+                OnShipMove.Invoke();
 
                 var shipPos = ship.transform.position;
 
@@ -55,22 +53,6 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void HealthWatcher(float health)
-    {
-        if (health <= 0)
-        {
-            if (ship != null)
-            {
-                ship.GetComponent<Ship>().IsAlive = false;
-            }
-            else
-            {
-                ship = GameObject.FindGameObjectWithTag("ShipScript");
-                ship.GetComponent<Ship>().IsAlive = false;
-
-            }
-        }
-    }
     public void StartGame()
     {
         isStarted = true;
@@ -87,10 +69,6 @@ public class GameController : MonoBehaviour
         youLosePlane.gameObject.SetActive(true);
 
 
-    }
-    private void Move()
-    {
-        movingZone.transform.position += new Vector3(0, 0, speed * Time.fixedDeltaTime);
     }
     private void SwitchLile(Vector3 shipPos)
     {

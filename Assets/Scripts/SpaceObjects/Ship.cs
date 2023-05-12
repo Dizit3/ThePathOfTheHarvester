@@ -16,7 +16,7 @@ public class Ship : MonoBehaviour
 
     public event Action<int> OnAddMoney;
     public static event Action OnShake;
-    public static event Action<float> OnHealthChanged;
+    public event Action<float> OnHealthChanged;
 
     public States State
     {
