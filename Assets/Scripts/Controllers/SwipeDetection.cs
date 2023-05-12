@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SwipeDetection : MonoBehaviour
 {
 
-    public static event OnSwipeInput SwipeEvent;
-    public delegate void OnSwipeInput(Vector2 direction);
+    public static event Action<Vector2> OnSwipe;
 
     private Vector2 tapPosition;
     private Vector2 swipeDelta;
@@ -74,15 +74,15 @@ public class SwipeDetection : MonoBehaviour
 
         if (swipeDelta.magnitude > deadZone)
         {
-            if (SwipeEvent != null)
+            if (OnSwipe != null)
             {
                 if (Mathf.Abs(swipeDelta.x) > Mathf.Abs(swipeDelta.y))
                 {
-                    SwipeEvent(swipeDelta.x > 0 ? Vector2.right : Vector2.left);
+                    OnSwipe(swipeDelta.x > 0 ? Vector2.right : Vector2.left);
                 }
                 else
                 {
-                    SwipeEvent(swipeDelta.y > 0 ? Vector2.up : Vector2.down);
+                    OnSwipe(swipeDelta.y > 0 ? Vector2.up : Vector2.down);
                 }
 
                 ResetSwipe();

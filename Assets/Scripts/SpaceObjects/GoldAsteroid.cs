@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public class GoldAsteroid : SpaceBody
-    {
+public class GoldAsteroid : MonoBehaviour, IWeighted
+{
+
+    [SerializeField] private int weight = 1;
+
     private bool isRotate;
 
     private Rigidbody rb;
@@ -24,7 +27,6 @@ public class GoldAsteroid : SpaceBody
 
     }
 
-
     private void Rotate()
     {
         rb.AddTorque(new Vector3(Rand(), Rand(), Rand()) * 3);
@@ -33,6 +35,16 @@ public class GoldAsteroid : SpaceBody
     private float Rand()
     {
         return Random.Range(-1f, 1f);
+    }
+
+    public int GetWeight()
+    {
+        return weight;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 
 }

@@ -1,14 +1,12 @@
+using System;
 using UnityEngine;
 
 public class Idle : MonoBehaviour
 {
-    public static event OnIdle IdleEvent;
-    public delegate void OnIdle();
-
-
+    public static event Action OnIdle;
 
     public void OnIdleState()
     {
-        IdleEvent();
+        OnIdle();
     }
 }

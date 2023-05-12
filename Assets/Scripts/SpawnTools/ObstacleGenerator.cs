@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ObstacleGenerator : MonoBehaviour
@@ -9,35 +10,21 @@ public class ObstacleGenerator : MonoBehaviour
 
     [SerializeField] private float spawnDelay = 2f;
 
+    private List<IWeighted> weightedObj = new List<IWeighted>();
+
     private Vector3 lastLineToSpawn;
 
     private bool isSpawningActive = false;
 
-    //public GameObject ObjectWeight(GameObject[] objects)
-    //{
+    private void Awake()
+    {
 
-    //    int totalWeight = 0;
+        for (int i = 0; i < objectsToSpawn.Length; i++)
+        {
+            weightedObj.Add(objectsToSpawn[i].GetComponent<IWeighted>());
+        }
+    }
 
-    //    foreach (var obj in objects)
-    //    {
-    //        totalWeight += obj.Weight;
-    //    }
-
-    //    int randomWeight = Random.Range(0, totalWeight);
-
-    //    foreach (var obj in objects)
-    //    {
-    //        if (randomWeight < obj.Weight)
-    //        {
-    //            return obj;
-    //        }
-    //        randomWeight -= obj.Weight;
-    //    }
-
-    //    return null;
-
-
-    //}
     private void Update()
     {
         if (GameController.isStarted && !isSpawningActive)
@@ -45,11 +32,12 @@ public class ObstacleGenerator : MonoBehaviour
             StartCoroutine(SpawnObstacle());
             isSpawningActive = true;
         }
+
     }
 
     IEnumerator SpawnObstacle()
     {
-        while (true)
+        while (GameController.isStarted)
         {
             yield return new WaitForSeconds(spawnDelay);
 
@@ -67,15 +55,44 @@ public class ObstacleGenerator : MonoBehaviour
         }
     }
 
+    public IWeighted RandomIWeightedObject()
+    {
+        int totalWeight = 0;
+
+        foreach (var prefab in weightedObj)
+        {
+            totalWeight += prefab.GetWeight();
+        }
+
+        int randomWeight = Random.Range(0, totalWeight);
+
+        int currentWeight = 0;
+
+        foreach (var prefab in weightedObj)
+        {
+            currentWeight += prefab.GetWeight();
+
+            if (currentWeight > randomWeight)
+            {
+                return prefab;
+            }
+
+            currentWeight = 0;
+
+        }
+        return null;
+    }
+
     private void SpawnObstacle(Vector3 position)
     {
+        var randIWeighted = RandomIWeightedObject();
+        if (randIWeighted != null)
+        {
+            GameObject obj = objectPooler.GetPooledObject(randIWeighted.GetGameObject());
+            obj.transform.position = position;
 
-
-        GameObject obj = objectPooler.GetPooledObject(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)]);
-
-        obj.transform.position = position;
-
-        obj.SetActive(true);
+            obj.SetActive(true);
+        }
     }
 
 

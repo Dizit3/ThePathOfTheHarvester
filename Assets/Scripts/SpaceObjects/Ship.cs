@@ -6,36 +6,50 @@ using static Assets.Scripts.EnumStates;
 public class Ship : MonoBehaviour
 {
     [SerializeField] float shipLives = 100f;
-
-    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject animShip;
     [SerializeField] private Slider slider;
 
+    public bool IsAlive = true;
+
     private AudioSource audioSource;
+    private Animator animator;
 
-
-
-    public static event Action<int> AddMoneyEvent;
-    public static event OnCameraShake ShakeEvent;
-    public delegate void OnCameraShake();
+    public event Action<int> OnAddMoney;
+    public static event Action OnShake;
+    public static event Action<float> OnHealthChanged;
 
     public States State
     {
-        get { return (States)anim.GetInteger("turnDirection"); }
-        set { anim.SetInteger("turnDirection", (int)value); }
+        get { return (States)animator.GetInteger("turnDirection"); }
+        set
+        {
+            if (animator != null)
+            {
+                animator.SetInteger("turnDirection", (int)value);
+            }
+            else
+            {
+                animator = GameObject.FindGameObjectWithTag("ShipAnim").GetComponentInChildren<Animator>();
+            }
+        }
     }
 
 
     private void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
 
-        GameController.InclineEvent += OnIncline;
+        animator = animShip.GetComponentInChildren<Animator>();
+
+
+
+
+        GameController.OnIncline += Incline;
+        OnHealthChanged += ChangeHPBar;
 
         slider.value = shipLives;
 
-         audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
-
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -43,34 +57,37 @@ public class Ship : MonoBehaviour
         {
             shipLives -= 5f;
 
-            ShakeEvent();
+            OnHealthChanged?.Invoke(shipLives);
+            OnShake?.Invoke();
+
 
             collision.gameObject.SetActive(false);
 
             audioSource.Play();
-        } else if (collision.gameObject.tag == "Resource")
+        }
+        else if (collision.gameObject.tag == "Resource")
         {
             var cost = collision.gameObject.GetComponent<GoldAsteroid>().price;
 
-            AddMoneyEvent?.Invoke(cost);
+            OnAddMoney?.Invoke(cost);
 
             collision.gameObject.SetActive(false);
 
         }
-    }
-
-    private void Update()
-    {
-        slider.value = Mathf.Lerp(slider.value,shipLives, 0.1f);
-
-        if (shipLives <= 0)
+        else if (collision.gameObject.tag == "TestCube")
         {
-            Destroy(gameObject);
-        }
+            collision.gameObject.SetActive(false);
 
+
+        }
     }
 
-    public void OnIncline(Vector2 direction)
+    private void ChangeHPBar(float value)
+    {
+        slider.value = Mathf.Lerp(slider.value, shipLives, 0.1f);
+    }
+
+    public void Incline(Vector2 direction)
     {
         if (direction == Vector2.right)
         {
