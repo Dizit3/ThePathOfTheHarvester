@@ -7,11 +7,14 @@ TagManager:
   - Obstacle
   - Despawn
   - Resource
+  - TestCube
+  - ShipAnim
+  - ShipScript
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - IgnoreCollisions
   - Water
   - UI
   - Post-processing

@@ -10,51 +10,37 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject movingZone;
     [SerializeField] private GameObject ship;
+    [SerializeField] private GameObject shipAnim;
     [SerializeField] private GameObject exitButton;
     [SerializeField] private Button startButton;
-    [SerializeField] private TextMeshProUGUI totalScore;
-
-
+    [SerializeField] private Button exitToMainMenuButton;
+    [SerializeField] private Image youLosePlane;
 
 
     public static bool isStarted = false;
 
-    public static event Action<Vector2> InclineEvent;
+    public static event Action<Vector2> OnIncline;
 
     private int lineToMove = 2;
     private int lineCount = 4;
 
-
     public static int valuableMetals;
-
-    private void Start()
-    {
-        SwipeDetection.SwipeEvent += OnSwipe;
-        Idle.IdleEvent += OnIdle;
-        Ship.AddMoneyEvent += AddMoney;
-
-        totalScore.text = "0";
-
-    }
-
-    private void AddMoney(int obj)
-    {
-        var score = int.Parse(totalScore.text) + obj;
-
-        totalScore.text = Convert.ToString(score);
-    }
 
     private void Awake()
     {
         Application.targetFrameRate = 1000;
     }
-
-
+    private void Start()
+    {
+        SwipeDetection.OnSwipe += Swipe;
+        Idle.OnIdle += IdleState;
+        Ship.OnHealthChanged += HealthWatcher;
+    }
     private void FixedUpdate()
     {
         if (isStarted)
         {
-            if (ship != null)
+            if (ship.GetComponent<Ship>().IsAlive)
             {
                 Move();
 
@@ -69,15 +55,38 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void EndGame()
+    private void HealthWatcher(float health)
     {
-        isStarted = false;
+        if (health <= 0)
+        {
+            if (ship != null)
+            {
+                ship.GetComponent<Ship>().IsAlive = false;
+            }
+            else
+            {
+                ship = GameObject.FindGameObjectWithTag("ShipScript");
+                ship.GetComponent<Ship>().IsAlive = false;
+
+            }
+        }
     }
     public void StartGame()
     {
         isStarted = true;
         startButton.gameObject.SetActive(false);
         exitButton.gameObject.SetActive(false);
+
+    }
+    private void EndGame()
+    {
+        isStarted = false;
+        //var anim = shipAnim.gameObject.GetComponent<Animator>();
+        //anim.enabled = false;
+        exitToMainMenuButton.gameObject.SetActive(true);
+        youLosePlane.gameObject.SetActive(true);
+
+
     }
     private void Move()
     {
@@ -106,24 +115,23 @@ public class GameController : MonoBehaviour
                 break;
         }
     }
-    private void OnSwipe(Vector2 direction)
+    private void Swipe(Vector2 direction)
     {
         if (direction == Vector2.right)
         {
             lineToMove = Mathf.Clamp(++lineToMove, 0, lineCount);
 
-            InclineEvent?.Invoke(direction);
+            OnIncline?.Invoke(direction);
         }
         else if (direction == Vector2.left)
         {
             lineToMove = Mathf.Clamp(--lineToMove, 0, lineCount);
 
-            InclineEvent?.Invoke(direction);
+            OnIncline?.Invoke(direction);
         }
     }
-
-    private void OnIdle()
+    private void IdleState()
     {
-        InclineEvent?.Invoke(Vector2.zero);
+        OnIncline?.Invoke(Vector2.zero);
     }
 }
