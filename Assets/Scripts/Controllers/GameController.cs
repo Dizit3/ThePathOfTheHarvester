@@ -15,7 +15,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitToMainMenuButton;
     [SerializeField] private Image youLosePlane;
-    [SerializeField] private TextMeshProUGUI totalScore;
 
 
     public static bool isStarted = false;
@@ -27,40 +26,16 @@ public class GameController : MonoBehaviour
 
     public static int valuableMetals;
 
+    private void Awake()
+    {
+        Application.targetFrameRate = 1000;
+    }
     private void Start()
     {
         SwipeDetection.OnSwipe += Swipe;
         Idle.OnIdle += IdleState;
-        Ship.OnAddMoney += AddMoney;
         Ship.OnHealthChanged += HealthWatcher;
-
-        totalScore.text = "0";
-
     }
-
-    private void HealthWatcher(float health)
-    {
-        if (health <= 0)
-        {
-            if (ship != null)
-            {
-                ship.GetComponent<Ship>().IsAlive = false;
-            }
-            else
-            {
-                ship = GameObject.FindGameObjectWithTag("ShipScript");
-                ship.GetComponent<Ship>().IsAlive = false;
-
-            }
-        }
-    }
-
-    private void Awake()
-    {
-        Application.targetFrameRate = 1000;
-
-    }
-
     private void FixedUpdate()
     {
         if (isStarted)
@@ -80,7 +55,22 @@ public class GameController : MonoBehaviour
         }
     }
 
+    private void HealthWatcher(float health)
+    {
+        if (health <= 0)
+        {
+            if (ship != null)
+            {
+                ship.GetComponent<Ship>().IsAlive = false;
+            }
+            else
+            {
+                ship = GameObject.FindGameObjectWithTag("ShipScript");
+                ship.GetComponent<Ship>().IsAlive = false;
 
+            }
+        }
+    }
     public void StartGame()
     {
         isStarted = true;
@@ -88,7 +78,6 @@ public class GameController : MonoBehaviour
         exitButton.gameObject.SetActive(false);
 
     }
-
     private void EndGame()
     {
         isStarted = false;
@@ -98,12 +87,6 @@ public class GameController : MonoBehaviour
         youLosePlane.gameObject.SetActive(true);
 
 
-    }
-    private void AddMoney(int obj)
-    {
-        var score = int.Parse(totalScore.text) + obj;
-
-        totalScore.text = Convert.ToString(score);
     }
     private void Move()
     {

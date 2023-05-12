@@ -6,9 +6,7 @@ using static Assets.Scripts.EnumStates;
 public class Ship : MonoBehaviour
 {
     [SerializeField] float shipLives = 100f;
-
-    public GameObject animShip;
-
+    [SerializeField] private GameObject animShip;
     [SerializeField] private Slider slider;
 
     public bool IsAlive = true;
@@ -16,7 +14,7 @@ public class Ship : MonoBehaviour
     private AudioSource audioSource;
     private Animator animator;
 
-    public static event Action<int> OnAddMoney;
+    public event Action<int> OnAddMoney;
     public static event Action OnShake;
     public static event Action<float> OnHealthChanged;
 
@@ -28,12 +26,10 @@ public class Ship : MonoBehaviour
             if (animator != null)
             {
                 animator.SetInteger("turnDirection", (int)value);
-
             }
             else
             {
                 animator = GameObject.FindGameObjectWithTag("ShipAnim").GetComponentInChildren<Animator>();
-
             }
         }
     }
