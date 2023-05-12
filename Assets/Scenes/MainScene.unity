@@ -1632,7 +1632,7 @@ GameObject:
   - component: {fileID: 787719048}
   m_Layer: 0
   m_Name: GameController
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1664,7 +1664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f8350a6726dbe40a3740fddd2b66cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swichSideSpeed: 0.5
   ship: {fileID: 893850661}
   shipAnim: {fileID: 170847782}
   exitButton: {fileID: 1974214331}
@@ -1710,6 +1709,7 @@ GameObject:
   - component: {fileID: 893850663}
   - component: {fileID: 893850668}
   - component: {fileID: 893850667}
+  - component: {fileID: 893850669}
   - component: {fileID: 893850666}
   m_Layer: 0
   m_Name: ShipScript
@@ -1901,6 +1901,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   movingZone: {fileID: 1327742856}
+--- !u!114 &893850669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893850661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d4799dd74aea344835426e8568983d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &963190782
 PrefabInstance:
   m_ObjectHideFlags: 0

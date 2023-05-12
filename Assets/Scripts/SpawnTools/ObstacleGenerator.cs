@@ -31,6 +31,7 @@ public class ObstacleGenerator : MonoBehaviour
         {
             StartCoroutine(SpawnObstacle());
             isSpawningActive = true;
+
         }
 
     }

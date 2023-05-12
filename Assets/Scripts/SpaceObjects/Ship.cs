@@ -43,7 +43,7 @@ public class Ship : MonoBehaviour
 
 
 
-        GameController.OnIncline += Incline;
+        ShipSwitchSide.OnIncline += Incline;
         OnHealthChanged += ChangeHPBar;
 
         slider.value = shipLives;
