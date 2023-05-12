@@ -1628,6 +1628,8 @@ GameObject:
   m_Component:
   - component: {fileID: 787719046}
   - component: {fileID: 787719047}
+  - component: {fileID: 787719049}
+  - component: {fileID: 787719048}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1671,7 +1673,31 @@ MonoBehaviour:
   startButton: {fileID: 1986997859}
   exitToMainMenuButton: {fileID: 403456730}
   youLosePlane: {fileID: 1872297159}
-  totalScore: {fileID: 1862806893}
+--- !u!114 &787719048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787719044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0a1582a9ba67a419a45d2686a57c69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScoreLabel: {fileID: 1862806893}
+--- !u!114 &787719049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787719044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2a1aad52ad24204f984e32b9da3b4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &893850661
 GameObject:
   m_ObjectHideFlags: 0
@@ -8213,7 +8239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1000
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
